@@ -2,7 +2,46 @@ import React, { useState } from 'react';
 import './App.css';
 
 const App = () => {
-  const [products, setProducts] = useState([]);
+  
+  // const [products, setProducts] = useState([]);
+  const [products, setProducts] = useState([
+    {
+      id: 1,
+      productName: 'Product 1',
+      description: 'This is the description for Product 1.',
+      imageURL: 'https://example.com/product1.jpg',
+      category: 'Category 1',
+      mrp: 10.99,
+      purchasePrice: 7.99,
+      sellingPrice: 9.99,
+      unit: 'kg',
+      quantity: 10,
+    },
+    {
+      id: 2,
+      productName: 'Product 2',
+      description: 'This is the description for Product 2.',
+      imageURL: 'https://example.com/product2.jpg',
+      category: 'Category 2',
+      mrp: 15.99,
+      purchasePrice: 12.99,
+      sellingPrice: 14.99,
+      unit: 'lb',
+      quantity: 5,
+    },
+    {
+      id: 3,
+      productName: 'Product 3',
+      description: 'This is the description for Product 3.',
+      imageURL: 'https://example.com/product3.jpg',
+      category: 'Category 1',
+      mrp: 8.99,
+      purchasePrice: 6.99,
+      sellingPrice: 7.99,
+      unit: 'piece',
+      quantity: 20,
+    },
+  ]);
   const [formData, setFormData] = useState({
     productName: '',
     description: '',
