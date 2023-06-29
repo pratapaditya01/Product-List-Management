@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './App.css';
 
 const App = () => {
   const [products, setProducts] = useState([]);
@@ -7,11 +8,11 @@ const App = () => {
     description: '',
     imageURL: '',
     category: '',
-    mrp: 0,
-    purchasePrice: 0,
-    sellingPrice: 0,
+    mrp: '',
+    purchasePrice: '',
+    sellingPrice: '',
     unit: 'kg',
-    quantity: 0,
+    quantity: '',
   });
   const [editIndex, setEditIndex] = useState(-1);
 
@@ -33,6 +34,7 @@ const App = () => {
         updatedProducts[editIndex] = formData;
         return updatedProducts;
       });
+      setEditIndex(-1);
     } else {
       // Add new product
       setProducts((prevProducts) => [...prevProducts, formData]);
@@ -43,19 +45,16 @@ const App = () => {
       description: '',
       imageURL: '',
       category: '',
-      mrp: 0,
-      purchasePrice: 0,
-      sellingPrice: 0,
+      mrp: '',
+      purchasePrice: '',
+      sellingPrice: '',
       unit: 'kg',
-      quantity: 0,
+      quantity: '',
     });
-
-    setEditIndex(-1);
   };
 
   const handleEdit = (index) => {
-    const product = products[index];
-    setFormData(product);
+    setFormData(products[index]);
     setEditIndex(index);
   };
 
@@ -65,30 +64,30 @@ const App = () => {
       updatedProducts.splice(index, 1);
       return updatedProducts;
     });
+    setEditIndex(-1);
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Product List</h1>
-      <ul>
-        {products.map((product, index) => (
-          <li key={index}>
-            <h3>{product.productName}</h3>
-            <p>{product.description}</p>
-            <img src={product.imageURL} alt={product.productName} />
-            <p>Category: {product.category}</p>
-            <p>MRP: {product.mrp}</p>
-            <p>Purchase Price: {product.purchasePrice}</p>
-            <p>Selling Price: {product.sellingPrice}</p>
-            <p>Unit: {product.unit}</p>
-            <p>Quantity: {product.quantity}</p>
-            <button onClick={() => handleEdit(index)}>Edit</button>
-            <button onClick={() => handleDelete(index)}>Delete</button>
-          </li>
-        ))}
-      </ul>
+      <div className="product-grid">
+        {products.length === 0 ? (
+          <p>No products available</p>
+        ) : (
+          products.map((product, index) => (
+            <div className="product-card" key={index} onClick={() => handleEdit(index)}>
+              <img src={product.imageURL} alt={product.productName} />
+              <h3>{product.productName}</h3>
+              <p className="product-category">Category: {product.category}</p>
+              <p className="product-mrp">MRP: {product.mrp}</p>
+              <p className="product-price">Price: {product.sellingPrice}</p>
+              <p className="product-quantity">Quantity: {product.quantity}</p>
+            </div>
+          ))
+        )}
+      </div>
 
-      <h2>Add/Edit Product</h2>
+      <h2>{editIndex !== -1 ? 'Edit Product' : 'Add Product'}</h2>
       <form onSubmit={handleSubmit}>
         <label htmlFor="productName">Product Name</label>
         <input
@@ -97,8 +96,9 @@ const App = () => {
           name="productName"
           value={formData.productName}
           onChange={handleInputChange}
+          required
         />
-<br></br>
+
         <label htmlFor="description">Description</label>
         <input
           type="text"
@@ -106,8 +106,9 @@ const App = () => {
           name="description"
           value={formData.description}
           onChange={handleInputChange}
+          required
         />
-<br></br>
+
         <label htmlFor="imageURL">Image URL</label>
         <input
           type="text"
@@ -115,8 +116,9 @@ const App = () => {
           name="imageURL"
           value={formData.imageURL}
           onChange={handleInputChange}
-        />
-<br></br>
+          required
+       />
+
         <label htmlFor="category">Category</label>
         <input
           type="text"
@@ -124,8 +126,9 @@ const App = () => {
           name="category"
           value={formData.category}
           onChange={handleInputChange}
+          required
         />
-<br></br>
+
         <label htmlFor="mrp">MRP</label>
         <input
           type="number"
@@ -133,8 +136,9 @@ const App = () => {
           name="mrp"
           value={formData.mrp}
           onChange={handleInputChange}
+          required
         />
-<br></br>
+
         <label htmlFor="purchasePrice">Purchase Price</label>
         <input
           type="text"
@@ -142,8 +146,9 @@ const App = () => {
           name="purchasePrice"
           value={formData.purchasePrice}
           onChange={handleInputChange}
+          required
         />
-<br></br>
+
         <label htmlFor="sellingPrice">Selling Price</label>
         <input
           type="text"
@@ -151,20 +156,22 @@ const App = () => {
           name="sellingPrice"
           value={formData.sellingPrice}
           onChange={handleInputChange}
+          required
         />
-<br></br>
+
         <label htmlFor="unit">Unit</label>
         <select
           id="unit"
           name="unit"
           value={formData.unit}
           onChange={handleInputChange}
+          required
         >
           <option value="kg">kg</option>
           <option value="lb">lb</option>
           <option value="piece">piece</option>
         </select>
-<br></br>
+
         <label htmlFor="quantity">Quantity</label>
         <input
           type="number"
@@ -172,8 +179,9 @@ const App = () => {
           name="quantity"
           value={formData.quantity}
           onChange={handleInputChange}
+          required
         />
-<br></br>
+
         <button type="submit">{editIndex !== -1 ? 'Update' : 'Add'} Product</button>
       </form>
     </div>
